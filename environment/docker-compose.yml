@@ -1,0 +1,55 @@
+version: '3'
+
+services:
+
+  postgres:
+    container_name: pdf2png_postgres
+    image: "postgres:14.1-alpine"
+    env_file: .env
+
+  rabbit:
+    container_name: pdf2png_rabbit
+    image: "rabbitmq:3.9.10"
+    env_file: .env
+
+  pdf2png_web:
+    container_name: pdf2png_web
+    env_file: .env
+    environment:
+      - CONTAINER_NAME=web
+    build:
+      context: ../
+      dockerfile: environment/Dockerfile
+    volumes:
+      - "../src:/code"
+    ports:
+      - 8000:8000
+    depends_on:
+      - postgres
+      - rabbit
+    links:
+      - postgres:postgres
+      - rabbit:rabbit
+    stdin_open: true
+    tty: true
+    restart: on-failure # will restart until success
+
+  pdf2png_swarm:
+    container_name: pdf2png_swarm
+    env_file: .env
+    environment:
+      - CONTAINER_NAME=swarm
+    build:
+      context: ../
+      dockerfile: environment/Dockerfile
+    volumes:
+      - "../src:/code"
+    depends_on:
+      - postgres
+      - rabbit
+    links:
+      - postgres:postgres
+      - rabbit:rabbit
+    stdin_open: true
+    tty: true
+    restart: on-failure # will restart until success

@@ -1,0 +1,9 @@
+.coverage
+.idea
+__pycache__
+*.pyc
+.pytest_cache
+*.swp
+.vscode/
+.venv
+Pipfile.lock

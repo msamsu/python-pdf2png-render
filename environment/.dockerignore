@@ -1,0 +1,14 @@
+.dockerignore
+.env
+Dockerfile
+docker-compose.yml
+.git
+
+__pycache__
+*.pyc
+.idea
+.pytest_cache
+*.swp
+.vscode/
+.venv
+Pipfile.lock
