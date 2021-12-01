@@ -7,6 +7,10 @@ RUN pip install psycopg2-binary==2.9.2
 RUN pip install celery==5.2.1
 RUN pip install coverage==6.1.2
 
+RUN apt update && apt install -y poppler-utils
+RUN pip install pdf2image==1.16.0
+# RUN pip install pymupdf==1.19.2
+
 RUN pip freeze
 
 WORKDIR /code

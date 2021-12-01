@@ -28,7 +28,7 @@ class WorkPath:
         self.kind = kind
 
     def upload_to(self, instance, filename: str) -> str:
-        assert isinstance(instance, Work)
+        assert isinstance(instance, (Work, Output))
         instance.orig_pdf_name = filename[:1024]
         uid = str(uuid4())
         return os.path.join('works', self.kind, uid[:2], f'{uid}{pathlib.Path(filename).suffix}')
@@ -48,10 +48,6 @@ class Work(models.Model):
     created_at = models.DateTimeField(default=timezone.now, blank=True)
     work_started_at = models.DateTimeField(null=True, blank=True, default=None)
     done_at = models.DateTimeField(null=True, blank=True, default=None)
-
-    @property
-    def output_urls(self) -> list:
-        return [item.png_file.url for item in self.outputs.all()]
 
 
 class Output(models.Model):
