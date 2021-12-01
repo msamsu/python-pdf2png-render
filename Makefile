@@ -21,23 +21,23 @@ stop:
 rm:
 	docker-compose -f environment/docker-compose.yml rm -f
 
-bash: upd
+bash:
 	${DOCKER_COMPOSE_WEB} exec ${DC_OPTS} ${WEB_CONT} bash
 
 django_command:
 	${DOCKER_COMPOSE_WEB} exec ${DC_OPTS} ${WEB_CONT} python manage.py ${COMMAND}
 
-shell_plus: upd
+shell_plus:
 	${DOCKER_COMPOSE_WEB} exec ${DC_OPTS} ${WEB_CONT} python manage.py shell_plus
 
-test: upd
+test:
 	${DOCKER_COMPOSE_WEB} exec ${DC_OPTS} ${WEB_CONT} bash -c "coverage run --source='.' manage.py test ; coverage report"
 
-dbshell: upd
+dbshell:
 	${DOCKER_COMPOSE_WEB} exec ${DC_OPTS} ${WEB_CONT} python manage.py dbshell
 
-makemigrations: upd
+makemigrations:
 	${DOCKER_COMPOSE_WEB} exec ${DC_OPTS} ${WEB_CONT} python manage.py makemigrations
 
-migrate: upd
+migrate:
 	${DOCKER_COMPOSE_WEB} exec ${DC_OPTS} ${WEB_CONT} python manage.py migrate

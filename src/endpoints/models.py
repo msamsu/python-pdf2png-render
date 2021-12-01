@@ -54,3 +54,4 @@ class Output(models.Model):
 
     work = models.ForeignKey(Work, related_name='outputs', on_delete=CASCADE)
     png_file = models.FileField(upload_to=WorkPath('png').upload_to)
+    text = models.TextField(default='')

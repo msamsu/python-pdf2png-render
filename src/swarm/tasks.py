@@ -1,6 +1,7 @@
 import logging
 import tempfile
 
+import fitz
 from celery import shared_task
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.files import File
@@ -25,30 +26,18 @@ def process_pdf(pk: int):
 
     logger.info(f'Work {work.id} started')
 
-    # doc = fitz.open(work.pdf_file.path)
-    # print(doc)
-    # print(dir(doc))
-    # print(doc.__dict__)
-    # print(doc.page_count)
-    # print(doc.metadata)
-    #
-    # for page in doc:
-    #     print(page)
-    #     # print(page.get_text())
-    #     pix = page.get_pixmap(width=1200)
-    #     print(dir(pix))
-    #     print(pix.width)
-    #     pix.save("out.png")
-
     try:
+        doc = fitz.open(work.pdf_file.path)
+        page_texts = [item.get_text() for item in doc]
+
         with tempfile.TemporaryDirectory() as path:
-            pages = convert_from_path(work.pdf_file.path, output_folder=path, size=(1200, 1600), dpi=99)
+            pages = convert_from_path(work.pdf_file.path, output_folder=path, size=(1200, 1600))
             work.page_count = len(pages)
             work.outputs.all().delete()
-            for page in pages:
+            for idx, page in enumerate(pages):
                 with tempfile.TemporaryFile() as ff:
                     page.save(ff, 'PNG')
-                    Output.objects.create(work=work, png_file=File(ff, name='temp.png'))
+                    Output.objects.create(work=work, png_file=File(ff, name='temp.png'), text=page_texts[idx])
     except:
         logger.exception(f'Processing work {work.id} failed')
         work.status = 'error'
