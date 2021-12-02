@@ -18,7 +18,6 @@ class V1TestCase(APITestCase):
         """
         response = self._create_new_work()
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-        self.assertEqual(response.data['id'], 1)
         self.assertEqual(response.data['status'], 'created')
         self.assertEqual(response.data['orig_pdf_name'], 'invoice-cs-CZ.pdf')
 
