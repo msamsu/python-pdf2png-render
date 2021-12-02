@@ -4,6 +4,7 @@ if [ "$CONTAINER_NAME" = 'web' ]; then
     echo 'launching web'
     python manage.py migrate --noinput
     python manage.py collectstatic --noinput
+    python manage.py generateschema --file openapi-schema.yml
     python manage.py runserver 0.0.0.0:8000
 fi
 

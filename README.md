@@ -31,7 +31,16 @@ as daemon:
 make upd
 ```
 
+ - Access to OpenApi documentation: http://0.0.0.0:8000/
+ - Access to django-restframework GUI: http://0.0.0.0:8000/api/v1/
+ - Access to django admin: http://0.0.0.0:8000/admin/
+
 ## Run tests
 ```bash
 make test
+```
+
+## Run coding standards check
+```bash
+make pep8
 ```

@@ -1,0 +1,132 @@
+openapi: 3.0.2
+info:
+  title: ''
+  version: ''
+paths:
+  /api/v1/works/:
+    get:
+      operationId: listWorks
+      description: ''
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                    example: 123
+                  next:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?page=4
+                  previous:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?page=2
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Work'
+          description: ''
+      tags:
+      - api
+    post:
+      operationId: createWork
+      description: ''
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Work'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Work'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Work'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Work'
+          description: ''
+      tags:
+      - api
+  /api/v1/works/{id}/:
+    get:
+      operationId: retrieveWork
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this work.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Work'
+          description: ''
+      tags:
+      - api
+components:
+  schemas:
+    Work:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        pdf_file:
+          type: string
+          format: binary
+        orig_pdf_name:
+          type: string
+          readOnly: true
+        status:
+          enum:
+          - created
+          - wip
+          - done
+          - error
+          type: string
+          readOnly: true
+        page_count:
+          type: integer
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        work_started_at:
+          type: string
+          format: date-time
+          readOnly: true
+        done_at:
+          type: string
+          format: date-time
+          readOnly: true
+        pages_rendered:
+          type: string
+          readOnly: true
+        pages_text:
+          type: string
+          readOnly: true
+      required:
+      - pdf_file
