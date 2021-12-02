@@ -15,6 +15,7 @@ RUN pip freeze
 
 WORKDIR /code
 COPY src /code
+COPY sample /sample
 COPY environment/entrypoint.sh /
 
 ENV PYTHONPATH $PYTHONPATH:/code/

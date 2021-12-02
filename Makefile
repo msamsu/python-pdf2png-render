@@ -41,3 +41,6 @@ makemigrations:
 
 migrate:
 	${DOCKER_COMPOSE_WEB} exec ${DC_OPTS} ${WEB_CONT} python manage.py migrate
+
+pep8:
+	flake8 .

@@ -18,7 +18,7 @@ def process_pdf(pk: int):
     try:
         work = Work.objects.get(pk=pk)
     except ObjectDoesNotExist:
-        logger.debug(f'Work of pk {pk} does not exist')
+        logger.info(f'Work of pk {pk} does not exist')
         return
 
     work.work_started_at = timezone.now()
@@ -38,7 +38,7 @@ def process_pdf(pk: int):
                 with tempfile.TemporaryFile() as ff:
                     page.save(ff, 'PNG')
                     Output.objects.create(work=work, png_file=File(ff, name='temp.png'), text=page_texts[idx])
-    except:
+    except Exception:
         logger.exception(f'Processing work {work.id} failed')
         work.status = 'error'
         work.save()
