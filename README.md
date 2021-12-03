@@ -26,7 +26,7 @@ make build
 make up
 ```
 
-as daemon:
+or as a daemon:
 ```bash
 make upd
 ```
@@ -52,6 +52,7 @@ make pep8
 When you have the app up and running run
  ```bash
 python stress_test.py
+python stress_test.py 1000  # for more api calls
 ```
 
  Eventually change concurrency of the celery worker:

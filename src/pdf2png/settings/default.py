@@ -131,8 +131,8 @@ REST_FRAMEWORK = {
         'rest_framework.throttling.UserRateThrottle'
     ),
     'DEFAULT_THROTTLE_RATES': {
-        'anon': '400/minute',
-        'user': '400/minute'
+        'anon': '100/second',
+        'user': '100/second'
     },
     'DEFAULT_VERSIONING_CLASS': 'rest_framework.versioning.NamespaceVersioning'
 }
