@@ -10,5 +10,5 @@ fi
 
 if [ "$CONTAINER_NAME" = 'swarm' ]; then
     echo 'launching swarm'
-    bash -c "cd /code/ && celery -A swarm worker -l warning -c 1 -Q swarm -n swarm.%h --without-mingle --without-gossip"
+    bash -c "cd /code/ && celery -A swarm worker -l warning -c "$SWARM_CONCURRENCY" -Q swarm -n swarm.%h --without-mingle --without-gossip"
 fi

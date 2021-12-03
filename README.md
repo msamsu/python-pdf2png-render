@@ -44,3 +44,15 @@ make test
 ```bash
 make pep8
 ```
+
+
+## Run simple stress test
+ - requires `requests`
+
+When you have the app up and running run
+ ```bash
+python stress_test.py
+```
+
+ Eventually change concurrency of the celery worker:
+ `SWARM_CONCURRENCY` variable in `environment/.env` file

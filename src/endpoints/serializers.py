@@ -20,6 +20,7 @@ class WorkSerializer(serializers.ModelSerializer):
         return [item.text for item in obj.outputs.all()]
 
     def create(self, validated_data: dict) -> Work:
-        if validated_data['pdf_file'].content_type != 'application/pdf':
-            raise ValidationError({'error': 'pdf_file is not of content type application/pdf'})
+        content_type = validated_data['pdf_file'].content_type
+        if content_type != 'application/pdf':
+            raise ValidationError({'error': f'pdf_file is not of content type application/pdf: {content_type}'})
         return super(WorkSerializer, self).create(validated_data)
