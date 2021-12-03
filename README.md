@@ -65,7 +65,7 @@ Field `status` enumerates to three values:
 - `done` when it is processed by celery worker
 - `error` when worker failed to process the work
 
-## Run tests
+## Run tests and coverage
 ```bash
 make test
 ```
